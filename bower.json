@@ -1,0 +1,24 @@
+{
+  "name": "GymBuddies",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jakeoverall/GymBuddies",
+  "authors": [
+    "Jake Overall <joverall22@gmail.com>"
+  ],
+  "description": "Boise Code Camp Talk, WebApps with Node and MongoDb",
+  "keywords": [
+    "Node",
+    "MongoDb",
+    "Angular"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/app/components/",
+    "test",
+    "tests"
+  ]
+}
