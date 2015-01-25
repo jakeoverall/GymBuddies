@@ -1,0 +1,40 @@
+{
+  "name": "GymBuddies",
+  "version": "0.0.0",
+  "description": "=============",
+  "main": "server.js",
+  "dependencies": {
+    "bcryptjs": "^2.1.0",
+    "body-parser": "^1.10.2",
+    "connect-mongo": "^0.7.0",
+    "cookie-parser": "^1.3.3",
+    "express": "^4.11.1",
+    "express-session": "^1.10.1",
+    "mongoose": "^3.8.21"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakeoverall/GymBuddies.git"
+  },
+  "keywords": [
+    "Node",
+    "MongoDb"
+  ],
+  "author": "Jake Overall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jakeoverall/GymBuddies/issues"
+  },
+  "homepage": "https://github.com/jakeoverall/GymBuddies"
+}

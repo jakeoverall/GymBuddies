@@ -11,7 +11,7 @@ First things first Fork this repo so you can edit and push your changes back up 
 
 ```terminal
 	> Git clone 'Your Fork'
-	> npm install  // Downloads all your node_componets
+	> npm install  // Downloads all your node_components
 	> npm install -g bower // This will globally install bower
 	> bower install // This will download the front-end dependencies
 ```
