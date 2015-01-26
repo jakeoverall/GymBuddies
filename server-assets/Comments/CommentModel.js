@@ -8,7 +8,7 @@ var Comment = new Schema({
   posted: {type: Date, required: true, default: new Date()},
   post: {type: ObjectId, required: true, ref: 'Post'},
   author: {type: ObjectId, required: true, ref: 'User'},
-  likes: [{type: ObjectId, ref: 'Like'}],
+  likes: [{type: ObjectId, ref: 'User'}],
   comments: [{type: ObjectId, ref: 'Comment'}]
 });
 

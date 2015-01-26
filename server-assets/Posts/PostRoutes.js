@@ -60,7 +60,53 @@ function updatePost (req, res){
   });
 }
 
+function deletePost (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.status(400).send(err);
+    } else if(user){
+      db.posts.findOne({_id: req.body.post.id}, function(err, post){
+        post.remove(function(err){
+          if(err){
+            return res.status(400).send(err);
+          }
+          return res.status(200).send({message: 'Post Removed'});
+        });
+      });
+    } else {
+      return res.status(401).send({message: 'Please sign in before editing your post'});
+    }
+  });
+}
+
+function likePost (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.status(400).send(err);
+    } else if(user){
+      db.posts.findOne({_id: req.body.post.id}, function(err, post){
+        for (var i = 0; i < post.likes.length; i++) {
+          if(post.likes[i] === user._id){
+            return res.status(400).send({message: 'unable to like again'});
+          }
+        }
+        post.likes.addToSet(user._id);
+        post.save(function(err){
+          if(err){
+            return res.status(400).send(err);
+          }
+          return res.status(200).send({message: 'Post Liked'});
+        });
+      });
+    } else {
+      return res.status(401).send({message: 'Please sign in before liking a post'});
+    }
+  });
+}
+
 module.exports = {
   create: createPost,
-  update: updatePost
+  update: updatePost,
+  delete: deletePost,
+  like: likePost
 };

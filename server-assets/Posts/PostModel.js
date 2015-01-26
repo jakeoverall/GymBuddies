@@ -8,7 +8,7 @@ var Post = new Schema({
   posted: {type: Date, required: true, default: new Date()},
   share: {type: String, enum: ['Friends', 'Public', 'Private'], required: true, default: 'Private'},
   author: {type: ObjectId, required: true, ref: 'User'},
-  likes: [{type: ObjectId, ref: 'Like'}],
+  likes: [{type: ObjectId, ref: 'User'}],
   comments: [{type: ObjectId, ref: 'Comment'}]
 });
 
