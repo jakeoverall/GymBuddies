@@ -85,6 +85,7 @@ function likePost (req, res){
       return res.status(400).send(err);
     } else if(user){
       db.posts.findOne({_id: req.body.post.id}, function(err, post){
+        //TODO: shouldn't have to loop through with likes being unique will test
         for (var i = 0; i < post.likes.length; i++) {
           if(post.likes[i] === user._id){
             return res.status(400).send({message: 'unable to like again'});
@@ -104,9 +105,69 @@ function likePost (req, res){
   });
 }
 
+function getPublicPosts (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.status(400).send(err);
+    } else if(user){
+      db.posts.sort({_id: -1}).limit(100).find({
+        share: 'Public',
+        posted: { $lt: req.body.after || Date.now()}
+      }).populate({
+        path: 'comments',
+        select: '-_id',
+        options: {
+          limit: req.body.moreComments || 50
+        }
+      }).exec(function(err, posts){
+        if(err){
+          return res.send(err);
+        }
+        return res.status(200).send(posts);
+      });
+    } else {
+      return res.redirect('/login');
+    }
+}
+
+function getFriendsPosts (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.status(400).send(err);
+    } else if(user){
+      if(req.session.friendsPosts.updated < Date.now() - 600000){
+        req.session.friendsPosts.updated =  Date.now();
+        for(var i = 0; i < user.friends.length; i++){
+          db.posts.sort({_id: -1}).limit(50).find({
+            share: 'Friends',
+            author: user.friends[i],
+            posted: { $lt: req.body.after || Date.now()}
+          }).populate({
+            path: 'comments',
+            select: '-_id',
+            options: {
+              limit: req.body.moreComments || 50
+            }
+          }).exec(function(err, posts){
+          if(err){
+            return res.send(err);
+          }
+            req.session.friendsPosts.data.push(posts);
+          });
+        }
+          return res.status(200).send(posts);
+        });
+      }
+    } else {
+      req.session.destroy();
+      return res.redirect('/login');
+    }
+}
+
 module.exports = {
   create: createPost,
   update: updatePost,
   delete: deletePost,
-  like: likePost
+  like: likePost,
+  get: getPublicPosts
 };

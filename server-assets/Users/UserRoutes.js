@@ -19,6 +19,11 @@ function login (req, res){
         return res.status(401).send(err);
       } else if(valid){
         req.session.email = user.email;
+        req.session.user = user;
+        req.session.friendsPosts = {
+          data: [],
+          updated: ''
+        }
         return res.status(200).send(user);
       } else {
         return res.status(404).send({
