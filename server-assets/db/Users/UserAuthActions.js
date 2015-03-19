@@ -71,13 +71,11 @@ function register(req, res) {
       newUser.password = '';
       req.session.user = newUser;
       req.session.email = req.body.user.email;
-      notifyEnrollment(newUser);
-      enrollmentAccountConfirmation(newUser);
       return res.status(200).send({ message: 'User registration successful'});
     });
 };
 
-function updateUser(req, res) {
+function update(req, res) {
     if(!req.session.user){
         return res.send({message: 'You must login before making changes to your account'});
     }
@@ -120,7 +118,7 @@ function isAdmin (req, res){
 function authenticate (req, res){
     if(req.session.user){
         if(req.session.updatedUser){
-            Users.findOne({'email': req.session.user.email, function(err, user){
+            Users.findOne({'email': req.session.user.email}, function(err, user){
                     if(err){
                         req.session.destroy();
                         return res.send({message: 'An error occured please log back in to continue'});
@@ -141,6 +139,7 @@ module.exports = {
     login: login,
     register: register,
     logout: logout,
+    update: update,
     isAdmin: isAdmin,
     authenticate: authenticate
 };

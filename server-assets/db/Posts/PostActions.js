@@ -10,6 +10,6 @@ function getPosts(req, res){
   })
 }
 
-modules.export = {
+module.export = {
   get: getPosts
 }

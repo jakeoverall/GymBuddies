@@ -1,13 +1,13 @@
 var GymBuddies = require('./config/namespace'),
     modules = GymBuddies.modules,
     app = GymBuddies.routehandler.main,
-    splash = GymBuddies.routehandler.members,
+    splash = GymBuddies.routehandler.splash,
     members = GymBuddies.routehandler.members,
     admin = GymBuddies.routehandler.admin,
     db = GymBuddies.dbConnect,
-    port = 3080;
+    port = 8999;
 
-var server = modules.http.createServer(app),
+var server = modules.http.createServer(app);
 
 //compress files to optimize load times
 app.use(modules.compression());
@@ -43,7 +43,7 @@ members.put('/update', db.users.auth.update);
 //Member Posts Requests
 members.post('/post/create', db.users.posts.create);
 members.put('/post/update', db.users.posts.update);
-members.put('/post/delete', db.users.posts.delete);
+members.delete('/post/delete', db.users.posts.delete);
 members.get('/post/like', db.users.posts.like);
 
 //Member Comments Requests
@@ -53,7 +53,7 @@ members.put('/post/delete', db.users.posts.delete);
 members.get('/post/like', db.users.posts.like);
 
 //Admin Login
-admin.get('/authenticate', db.users.isAdmin);
+admin.get('/authenticate', db.users.auth.isAdmin);
 
 //wait to setup 404 on unknown routes
 app.get('*', function(req, res){

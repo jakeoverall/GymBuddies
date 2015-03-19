@@ -48,7 +48,7 @@ function updateComment (req, res){
     if(err){
       return res.send(err);
     } else if(user){
-      Comments.findOneAndUpdate({_id: req.body.Comment._id}, req.body.Comment function(err, Comment){
+      Comments.findOneAndUpdate({_id: req.body.Comment._id}, req.body.Comment, function(err, Comment){
         Comment.save(function(err){
           if(err){
             return res.send(err);

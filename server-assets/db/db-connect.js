@@ -15,6 +15,6 @@ connection.once('open', function(){
 });
 
 module.exports = {
-  user: Users,
+  users: Users,
   posts: Posts
 };

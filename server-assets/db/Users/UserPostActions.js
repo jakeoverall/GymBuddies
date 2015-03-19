@@ -6,8 +6,8 @@ function _validateAuthor(req, cb){
   if(!req.session){
     return cb();
   }
-  if(req.session.email === req.body.email){
-    Users.findOne({email: req.body.email}, function(err, user){
+  if(req.session.user.email === req.body.post.email){
+    Users.findOne({email: req.session.user.email}, function(err, user){
       if(err){
         return cb(err);
       }
@@ -23,7 +23,7 @@ function createPost(req, res){
     if(err){
       return res.send(err);
     } else if(user){
-      var newPost = new Post(req.body.post);
+      var newPost = new Posts(req.body.post);
       newPost.author = user._id;
       newPost.save(function(err){
         if(err){
@@ -48,7 +48,7 @@ function updatePost (req, res){
     if(err){
       return res.send(err);
     } else if(user){
-      Posts.findOneAndUpdate({_id: req.body.post._id}, req.body.post function(err, post){
+      Posts.findOneAndUpdate({_id: req.body.post._id}, req.body.post, function(err, post){
         post.save(function(err){
           if(err){
             return res.send(err);
@@ -67,13 +67,11 @@ function deletePost (req, res){
     if(err){
       return res.send(err);
     } else if(user){
-      Posts.findOne({_id: req.body.post.id}, function(err, post){
-        post.remove(function(err){
-          if(err){
-            return res.send(err);
-          }
+      Posts.remove({_id: req.body.post.id}, function(err){
+        if(err){
+          return res.send(err);
+        }
           return res.send({message: 'Post Removed'});
-        });
       });
     } else {
       return res.send({message: 'Please sign in before editing your post'});
