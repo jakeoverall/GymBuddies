@@ -1,0 +1,115 @@
+var Users = require('./UserModel'),
+    Posts = require('../Posts/PostModel');
+
+
+function _validateAuthor(req, cb){
+  if(!req.session){
+    return cb();
+  }
+  if(req.session.email === req.body.email){
+    Users.findOne({email: req.body.email}, function(err, user){
+      if(err){
+        return cb(err);
+      }
+      return cb(null, user);
+    });
+  } else {
+    return cb({err: 'Whoops something broke try again'});
+  }
+}
+
+function createPost(req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.send(err);
+    } else if(user){
+      var newPost = new Post(req.body.post);
+      newPost.author = user._id;
+      newPost.save(function(err){
+        if(err){
+          return res.send(err);
+        }
+        user.posts.addToSet(newPost);
+        user.save(function(err){
+          if(err){
+            return res.send(err);
+          }
+          return res.send({message: 'Post Successful'});
+        });
+      });
+    } else {
+      return res.send({message: 'Please sign in before posting'});
+    }
+  });
+}
+
+function updatePost (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.send(err);
+    } else if(user){
+      Posts.findOneAndUpdate({_id: req.body.post._id}, req.body.post function(err, post){
+        post.save(function(err){
+          if(err){
+            return res.send(err);
+          }
+          return res.send({message: 'Post updated'});
+        });
+      });
+    } else {
+      return res.send({message: 'Please sign in before editing your post'});
+    }
+  });
+}
+
+function deletePost (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.send(err);
+    } else if(user){
+      Posts.findOne({_id: req.body.post.id}, function(err, post){
+        post.remove(function(err){
+          if(err){
+            return res.send(err);
+          }
+          return res.send({message: 'Post Removed'});
+        });
+      });
+    } else {
+      return res.send({message: 'Please sign in before editing your post'});
+    }
+  });
+}
+
+function likePost (req, res){
+  _validateAuthor(req, function(err, user){
+    if(err){
+      return res.send(err);
+    } else if(user){
+      Posts.findOne({_id: req.body.post.id}, function(err, post){
+        post.likes.addToSet(user._id);
+        post.save(function(err){
+          if(err){
+            return res.send(err);
+          }
+          user.likes.addToSet(post._id);
+          user.save(function(err){
+            if(err){
+              return res.send(err);
+            }
+            return res.send({message: 'Post Liked'});
+          });
+        });
+      });
+    } else {
+      return res.send({message: 'Please sign in before liking a post'});
+    }
+  });
+}
+
+module.exports = {
+  create: createPost,
+  update: updatePost,
+  delete: deletePost,
+  like: likePost
+};

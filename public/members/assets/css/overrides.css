@@ -1,0 +1,43 @@
+.gym-buddies-logo{
+  height: 60px;
+}
+header[role=banner] {
+  position: relative;
+  height: 60px;
+  background: #343642;
+}
+header[role=banner] #cd-logo {
+  float: left;
+  margin: 0px 0 0 5%;
+  /* reduce logo size on mobile and make sure it is left aligned with the transform-origin property */
+  -webkit-transform-origin: 0 50%;
+  -moz-transform-origin: 0 50%;
+  -ms-transform-origin: 0 50%;
+  -o-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transform: scale(0.8);
+  -moz-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  transform: scale(0.8);
+}
+header[role=banner] #cd-logo img {
+  display: block;
+}
+header[role=banner]::after {
+  /* clearfix */
+  content: '';
+  display: table;
+  clear: both;
+}
+@media only screen and (min-width: 768px) {
+  header[role=banner] {
+    height: 80px;
+  }
+  header[role=banner] #cd-logo {
+    margin: 0px 0 0 5%;
+  }
+  .gym-buddies-logo{
+    height: 83px;
+  }
+}
