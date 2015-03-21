@@ -118,7 +118,7 @@ Now that you have some basic understanding of node and we have ensured your syst
 ---
 ###GYM BUDDIES
 
-{<1>}![Gym Buddies logo](https:boisecodeworks.com/blog/content/images/2015/03/Gym-Buddies-Logo-256.png)
+![Gym Buddies logo](https://boisecodeworks.com/blog/content/images/2015/03/Gym-Buddies-Logo-256.png)
 
 Okay let me introduce you to the project that you will be expanding upon and learning from. Pretend for a second that you have been approached by a client that wants you to build a social media platform specifically targeted to Gym Fanatics. Your client is just positive that this app will be the next best thing and has done all of the leg work to get investors lined up but one big snag he is an idea guy only so there is no code base and he needs an MVP by the end of the week. 
 
