@@ -2,7 +2,7 @@
 var Posts = require('./PostModel');
 
 function getPosts(req, res){
-  Posts.find({}, function(err, posts){
+  Posts.find({share: 'Public'}).populate('author', 'name email').populate('comments', 'author body comments likes').exec(function(err, posts){
     if(err){
       return res.send(err);
     }
@@ -10,6 +10,6 @@ function getPosts(req, res){
   })
 }
 
-module.export = {
+module.exports = {
   get: getPosts
 }

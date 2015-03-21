@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
     posts: require('./Users/UserPostActions'),
     comments: require('./Users/UserCommentActions')
   },
-  Posts = require('./Posts/PostActions'),
+  Api = {
+    posts: require('./Posts/PostActions')
+  }
   connectionString = process.env.DBCONNECT || 'mongodb://localhost/GymBuddies';
 
 mongoose.connect(connectionString);
@@ -16,5 +18,5 @@ connection.once('open', function(){
 
 module.exports = {
   users: Users,
-  posts: Posts
+  api: Api
 };

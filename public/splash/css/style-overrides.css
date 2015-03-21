@@ -53,11 +53,11 @@
   font-size: 18px;
   font-size: 3.125rem;
   font-weight: bold;
-  color: #0293FF;
+  color: #116CAD;
 }
 @media only screen and (min-width: 768px) {
   #cd-intro h1 {
     font-size: 26px;
-    font-size: 5.625rem;
+    font-size: 2.625rem;
   }
 }

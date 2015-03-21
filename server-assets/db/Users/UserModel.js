@@ -5,8 +5,7 @@ var mongoose = require('mongoose'),
   SALT_FACTOR = 10;
 
 var User = new Schema({
-  firstName: {type: String, required: true, trim: true},
-  lastName: {type: String, required: true, trim: true},
+  name: {type: String, required: true, trim: true},
   email: {type: String, required: true, unique: true, trim: true},
   password: {type: String, required: true, trim: true},
   joined: {type: Date, required: true, default: new Date()},

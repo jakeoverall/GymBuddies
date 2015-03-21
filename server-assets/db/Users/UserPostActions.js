@@ -18,6 +18,17 @@ function _validateAuthor(req, cb){
   }
 }
 
+//keep your code DRY
+function _resolver(res, err, doc, cb){
+  if(err){
+    return res.send(err);
+  } else if (doc){
+    return cb(doc);
+  } else {
+    return res.send({message: 'Sorry nothing was found'});
+  }
+}
+
 function createPost(req, res){
   _validateAuthor(req, function(err, user){
     if(err){
@@ -49,11 +60,13 @@ function updatePost (req, res){
       return res.send(err);
     } else if(user){
       Posts.findOneAndUpdate({_id: req.body.post._id}, req.body.post, function(err, post){
-        post.save(function(err){
-          if(err){
-            return res.send(err);
-          }
-          return res.send({message: 'Post updated'});
+        _resolver(res,err, post, function(postDoc){
+            postDoc.save(function(err){
+            if(err){
+              return res.send(err);
+            }
+            return res.send({message: 'Post updated'});
+          });
         });
       });
     } else {
@@ -67,11 +80,12 @@ function deletePost (req, res){
     if(err){
       return res.send(err);
     } else if(user){
-      Posts.remove({_id: req.body.post.id}, function(err){
-        if(err){
-          return res.send(err);
-        }
-          return res.send({message: 'Post Removed'});
+      Posts.findOne({_id: req.body.post._id}, function(err, post){
+        _resolver(res, err, post, function(postDoc){
+          postDoc.remove(function(err){
+            return res.send({message: 'Post Removed'});
+          })
+        })
       });
     } else {
       return res.send({message: 'Please sign in before editing your post'});

@@ -13,3 +13,4 @@ exports.sessions = sessions;
 exports.MongoStore = require('connect-mongo')(sessions);
 exports.compression = require('compression');
 exports.validator = require('validator');
+exports.cors = require('cors');

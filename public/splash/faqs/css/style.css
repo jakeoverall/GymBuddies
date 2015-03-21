@@ -1,3 +1,9 @@
+.gym-buddies-logo{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
 /* -------------------------------- 
 
 Primary style
@@ -47,7 +53,7 @@ body.cd-overlay::after {
 }
 
 a {
-  color: #a9c056;
+  color: #116CAE;
   text-decoration: none;
 }
 
@@ -61,7 +67,7 @@ header {
   height: 180px;
   line-height: 180px;
   text-align: center;
-  background-color: #a9c056;
+  background-color: #116CAE;
 }
 header h1 {
   color: #ffffff;
@@ -108,7 +114,7 @@ header h1 {
   height: 50px;
   line-height: 50px;
   padding: 0 28px 0 16px;
-  background-color: #4e5359;
+  background-color: #1F1A16;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #ffffff;
@@ -186,7 +192,7 @@ header h1 {
     transition: opacity 0.2s;
   }
   .cd-faq-categories .selected {
-    background: #42464b !important;
+    background: #116CAE !important;
   }
   .cd-faq-categories .selected::before {
     opacity: 1;
